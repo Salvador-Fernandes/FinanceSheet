@@ -125,7 +125,7 @@
             var tr = document.createElement('tr');
             tr.appendChild(createCell('th','Processing Fee'));
             tr.appendChild(createCell('td', roundoff(procfee), 'text-amount'));
-            tr.appendChild(createCell('th','Processing Fee'));
+            tr.appendChild(createCell('th','Tax'));
             tr.appendChild(createCell('td',roundoff(procfee*gst), 'text-amount'));
             tr.appendChild(createCell('td',roundoff(procfee + procfee*gst), 'text-amount text-color'));
             myTable.appendChild(tr);
