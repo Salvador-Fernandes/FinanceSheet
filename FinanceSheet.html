@@ -3,15 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Finance Sheet</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        .total{
-            color: red !important;
-        }
-        .amount{
-            text-align: right !important;
-        }
+        .text-bold{ font-weight: bold !important;}
+        .text-color{color: red !important;}
+        .amount{    text-align: right !important;}
     </style>
   </head>
   <body>
@@ -32,7 +29,7 @@
         
                     <div class="col-12 d-inline-flex">
                         <label for="pramount" class="form-label" style="min-width: 150px !important">Principal Amount</label>
-                        <input type="number" class="form-control" id="pramount" placeholder="" value="76500.00" required>
+                        <input type="number" class="form-control" id="pramount" placeholder="" value="" required>
                     </div>
         
                     <div class="col-12 d-inline-flex">
@@ -120,7 +117,7 @@
             rates.set(6,[0,0.2892898619,0.2348308018,0.1890989893,0.1427606388,0.0958013775,0.04821833067])
             rates.set(9,[0,0.1965306077,0.1758345024,0.1548578173,0.1336050059,0.112067161,0.09024428263,0,0,0])
 
-            var interest = pramount * roi * (Math.pow(1 + roi, tenure) / (Math.pow(1 + roi, tenure) - 1));
+            var interest = pramount * roi * (Math.pow(1 + roi, tenure) / (Math.pow(1 + roi, tenure)-1));
             interest = interest*tenure - pramount;
             var install = pramount + (emitype == 0 ? 0 : interest);
 
@@ -130,11 +127,12 @@
             tr.appendChild(createCell('td', roundoff(procfee), 'amount'));
             tr.appendChild(createCell('th','Processing Fee'));
             tr.appendChild(createCell('td',roundoff(procfee*gst), 'amount'));
-            tr.appendChild(createCell('td',roundoff(procfee + procfee*gst), 'amount total'));
+            tr.appendChild(createCell('td',roundoff(procfee + procfee*gst), 'amount text-color'));
             myTable.appendChild(tr);
 
             myTable.appendChild(createRowBlank());
 
+            /**
             //Installment Calculations
             var tr = document.createElement('tr');
             tr.appendChild(createCell('th','Principal'));
@@ -144,14 +142,15 @@
             tr.appendChild(createCell('th','Total'));
             myTable.appendChild(tr);
             var tr = document.createElement('tr');
-            tr.appendChild(createCell('td',roundoff(pramount), 'amount total'));
-            tr.appendChild(createCell('td',roundoff(interest), 'amount total'));
-            tr.appendChild(createCell('td',roundoff(interest * gst), 'amount total'));
-            tr.appendChild(createCell('td',roundoff(install), 'amount total'));
-            tr.appendChild(createCell('td',roundoff(install + interest * gst), 'amount total'));
+            tr.appendChild(createCell('td',roundoff(pramount), 'amount text-color'));
+            tr.appendChild(createCell('td',roundoff(interest), 'amount text-color'));
+            tr.appendChild(createCell('td',roundoff(interest * gst), 'amount text-color'));
+            tr.appendChild(createCell('td',roundoff(install), 'amount text-color'));
+            tr.appendChild(createCell('td',roundoff(install + interest * gst), 'amount text-color'));
             myTable.appendChild(tr);
 
             myTable.appendChild(createRowBlank());
+            **/
 
             //Monthly Installment Calculations            
             var tr = document.createElement('tr');
@@ -173,16 +172,16 @@
                 tr.appendChild(createCell('td',roundoff(tempInterest), 'amount'));
                 tr.appendChild(createCell('td',roundoff(tempInterest * gst), 'amount'));
                 tr.appendChild(createCell('td',roundoff(tempInstall + tempInterest), 'amount'));
-                tr.appendChild(createCell('td',roundoff(tempInstall + tempInterest * (1+gst)), 'amount'));
+                tr.appendChild(createCell('td',roundoff(tempInstall + tempInterest * (1+gst)), 'amount text-color'));
                 myTable.appendChild(tr);
             }
             var tr = document.createElement('tr');
-            tr.appendChild(createCell('td',roundoff(tempTotalInstall),'amount total'));
-            tr.appendChild(createCell('td',roundoff(tempTotalInterest),'amount total'));
-            tr.appendChild(createCell('td',roundoff(tempTotalInterest * gst),'amount total'));
-            tr.appendChild(createCell('td',roundoff(tempTotalInstall + tempTotalInterest), 'amount total'));
+            tr.appendChild(createCell('td',roundoff(tempTotalInstall),'amount text-bold'));
+            tr.appendChild(createCell('td',roundoff(tempTotalInterest),'amount text-bold'));
+            tr.appendChild(createCell('td',roundoff(tempTotalInterest * gst),'amount text-bold'));
+            tr.appendChild(createCell('td',roundoff(tempTotalInstall + tempTotalInterest), 'amount text-bold'));
 
-            tr.appendChild(createCell('td',roundoff(tempTotalInstall + tempTotalInterest * (1+gst)), 'amount total'));
+            tr.appendChild(createCell('td',roundoff(tempTotalInstall + tempTotalInterest * (1+gst)), 'amount text-bold'));
             myTable.appendChild(tr);
         });
     </script>
