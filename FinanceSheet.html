@@ -108,7 +108,7 @@
         return node;
       }
 
-      function createTable(procfee, gst, pramount, roi, tenure, emitype) {
+      function createTable(procfee, gst, pramount, tenure, interest) {
         var myTable = document.getElementById('myTable');
         myTable.innerHTML = '';
 
@@ -133,16 +133,18 @@
         tr.appendChild(createCell('th', 'Total w/o Tax'));
         tr.appendChild(createCell('th', 'Total'));
         myTable.appendChild(tr);
-        var tempPramount = pramount;
-        var tempInstall = pramount;
+
+        var tempInstall = 0;
         var tempInterest = 0;
         var tempTotalInstall = 0;
         var tempTotalInterest = 0;
+
         for (let i = 1; i <= tenure; i++) {
-          tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
-          tempInstall = (pramount / tenure) - tempInterest;
+          tempInterest = interest[i];
+          tempInstall = pramount / tenure - tempInterest;
           tempTotalInstall += tempInstall;
           tempTotalInterest += tempInterest;
+
           var tr = document.createElement('tr');
           tr.appendChild(createCell('td', roundoff(tempInstall), 'text-amount'));
           tr.appendChild(createCell('td', roundoff(tempInterest), 'text-amount'));
@@ -150,9 +152,8 @@
           tr.appendChild(createCell('td', roundoff(tempInstall + tempInterest), 'text-amount'));
           tr.appendChild(createCell('td', roundoff(tempInstall + tempInterest * (1 + gst)), 'text-amount text-color'));
           myTable.appendChild(tr);
-          tempInstall = tempPramount - (tempInstall + tempInterest);
-          tempPramount = tempInstall;
         }
+
         var tr = document.createElement('tr');
         tr.appendChild(createCell('td', roundoff(tempTotalInstall), 'text-amount text-bold'));
         tr.appendChild(createCell('td', roundoff(tempTotalInterest), 'text-amount text-bold'));
@@ -160,7 +161,6 @@
         tr.appendChild(createCell('td', roundoff(tempTotalInstall + tempTotalInterest), 'text-amount text-bold'));
         tr.appendChild(createCell('td', roundoff(tempTotalInstall + tempTotalInterest * (1 + gst)), 'text-amount text-bold'));
         myTable.appendChild(tr);
-        return tempTotalInterest;
       }
 
       document.getElementById("process").addEventListener("click", function() {
@@ -170,10 +170,24 @@
         var roi = parseFloat(document.getElementById("roi").value) / 12 / 100;
         var tenure = parseFloat(document.getElementById("tenure").value);
         var emitype = parseFloat(document.getElementById("emitype").value);
-        var interest = createTable(procfee, gst, pramount, roi, tenure, emitype);
-        if (emitype != 0) {
-          createTable(procfee, gst, pramount + interest, roi, tenure, emitype);
+
+        //Interest Calculations
+        var interest = [0];
+        var tempPramount = pramount;
+        var tempInstall = pramount;
+        var tempInterest = 0;
+        var tempTotalInterest=0
+        for (let i = 1; i <= tenure; i++) {
+          tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
+          interest.push(tempInterest);
+          tempInstall = (pramount / tenure) - tempInterest;
+          tempInstall = tempPramount - (tempInstall + tempInterest);
+          tempPramount = tempInstall;
+          tempTotalInterest += tempInterest;
         }
+        
+        createTable(procfee, gst, (emitype == 0 ? pramount : pramount + tempTotalInterest), tenure, interest);
+
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
