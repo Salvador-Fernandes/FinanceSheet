@@ -135,7 +135,7 @@
         return node;
       }
 
-      function createTable(procfee, gst, pramount, tenure, interest) {
+      function createTable(procfee, gst, tenure, amount, interest) {
         var myTable = document.getElementById('myTable');
         myTable.innerHTML = '';
 
@@ -161,14 +161,12 @@
         tr.appendChild(createCell('th', 'Total'));
         myTable.appendChild(tr);
 
-        var tempInstall = 0;
-        var tempInterest = 0;
         var tempTotalInstall = 0;
         var tempTotalInterest = 0;
 
         for (let i = 1; i <= tenure; i++) {
-          tempInterest = interest[i];
-          tempInstall = pramount / tenure - tempInterest;
+          var tempInterest = interest[i];
+          var tempInstall = amount[i];
           tempTotalInstall += tempInstall;
           tempTotalInterest += tempInterest;
 
@@ -190,8 +188,50 @@
         myTable.appendChild(tr);
       }
 
+      document.getElementById("process").addEventListener("click", function(event) {
+        event.preventDefault()
+
+        var procfee = readInput("procfee");
+        var gst = readInput("gst") * 0.01;
+        var pramount = readInput("pramount");
+        var pramountdiscount = readInput("pramountdiscount");
+        var interestdiscount = readInput("interestdiscount");
+        var roi = readInput("roi") / 12 / 100;
+        var tenure = readInput("tenure");
+        var emitype = readInput("emitype");
+        pramount = pramount - pramountdiscount - interestdiscount;
+
+        //Interest Calculations
+        var interest = [0];
+        var amount = [0];
+        var tempPramount = pramount;
+        var tempInstall = pramount;
+        var tempInterest = 0;
+        var tempTotalInterest=0
+        for (let i = 1; i <= tenure; i++) {
+          tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
+          interest.push(tempInterest);
+          tempInstall = (pramount / tenure) - tempInterest;
+          amount.push(tempInstall)
+          tempInstall = tempPramount - (tempInstall + tempInterest);
+          tempPramount = tempInstall;
+          tempTotalInterest += tempInterest;
+        }
+        if(emitype == 1){
+          pramount = pramount + tempTotalInterest;
+        }
+        for (let i = 1; i <= tenure; i++) {
+          //interest[i] = interest[i] - (interest[i]/tempTotalInterest)*interestdiscount
+          amount[i] = ((pramount) / tenure) - interest[i];
+        }
+        tempTotalInterest -= interestdiscount
+        createTable(procfee, gst, tenure, amount, interest);
+
+      });
+
       document.getElementById("displayAdditional").addEventListener("click", function(event) {
         event.preventDefault()
+
         var x = document.getElementById("pramountdiscountvisible");
         if (x.classList.contains("d-none")) {
           x.classList.replace("d-none","d-inline-flex");
@@ -205,39 +245,6 @@
         } else {
           y.classList.replace("d-inline-flex","d-none");
         }
-      });
-
-      document.getElementById("process").addEventListener("click", function(event) {
-        event.preventDefault()
-        var procfee = readInput("procfee");
-        var gst = readInput("gst") * 0.01;
-        var pramount = readInput("pramount");
-        var pramountdiscount = readInput("pramountdiscount");
-        var interestdiscount = readInput("interestdiscount");
-        var roi = readInput("roi") / 12 / 100;
-        var tenure = readInput("tenure");
-        var emitype = readInput("emitype");
-        pramount = pramount - pramountdiscount;
-        //Interest Calculations
-        var interest = [0];
-        var tempPramount = pramount;
-        var tempInstall = pramount;
-        var tempInterest = 0;
-        var tempTotalInterest=0
-        for (let i = 1; i <= tenure; i++) {
-          tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
-          interest.push(tempInterest);
-          tempInstall = (pramount / tenure) - tempInterest;
-          tempInstall = tempPramount - (tempInstall + tempInterest);
-          tempPramount = tempInstall;
-          tempTotalInterest += tempInterest;
-        }
-        for (let i = 1; i <= tenure; i++) {
-          interest[i] = interest[i] - (interest[i]/tempTotalInterest)*interestdiscount
-        }
-        tempTotalInterest -= interestdiscount
-        createTable(procfee, gst, (emitype == 0 ? pramount : pramount + tempTotalInterest), tenure, interest);
-
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
