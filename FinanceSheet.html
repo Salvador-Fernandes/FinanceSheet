@@ -237,6 +237,7 @@
           x.classList.replace("d-none","d-inline-flex");
         } else {
           x.classList.replace("d-inline-flex","d-none");
+          document.getElementById("pramountdiscount").value = "0"
         }
 
         var y = document.getElementById("interestdiscountvisible");
@@ -244,6 +245,7 @@
           y.classList.replace("d-none","d-inline-flex");
         } else {
           y.classList.replace("d-inline-flex","d-none");
+          document.getElementById("interestdiscount").value = "0"
         }
       });
     </script>
