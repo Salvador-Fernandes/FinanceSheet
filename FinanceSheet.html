@@ -10,17 +10,27 @@
       html {
         font-size: 14px;
       }
-
       .text-bold {
         font-weight: bold !important;
       }
-
       .text-color {
         color: red !important;
       }
-
       .text-amount {
         text-align: right !important;
+      }
+      .input-group-text{
+        background-color: var(--bs-body-bg) !important; 
+      }
+      .droparrow{ 
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important; 
+        padding: .375rem 1.50rem .375rem .75rem;
+        background-repeat: no-repeat;
+        background-position: right .75rem center;
+        background-size: 16px 12px;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
       }
     </style>
   </head>
@@ -40,7 +50,18 @@
               </div>
               <div class="col-12 d-inline-flex">
                 <label for="pramount" class="form-label" style="min-width: 150px !important">Principal Amount</label>
-                <input type="number" class="form-control" id="pramount" placeholder="" value="0" required>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="pramount" placeholder="" value="0" required>
+                  <input type="button" class="input-group-text droparrow" id="displayAdditional" value="">
+                </div>
+              </div>
+              <div class="col-12 d-none" id="pramountdiscountvisible">
+                <label for="pramountdiscount" class="form-label" style="min-width: 150px !important">Principal Discount</label>
+                <input type="number" class="form-control" id="pramountdiscount" placeholder="" value="0" required>
+              </div>
+              <div class="col-12 d-none" id="interestdiscountvisible">
+                <label for="interestdiscount" class="form-label" style="min-width: 150px !important">Interest Discount</label>
+                <input type="number" class="form-control" id="interestdiscount" placeholder="" value="0" required>
               </div>
               <div class="col-12 d-inline-flex">
                 <label for="roi" class="form-label" style="min-width: 150px !important">Rate of Interest</label>
@@ -73,7 +94,7 @@
                   <span class="input-group-text">%</span>
                 </div>
               </div>
-              <button class="w-100 btn btn-lg btn-dark" type="button" id="process">Process</button>
+              <input type="button" class="w-100 btn btn-lg btn-dark" type="button" id="process" value="Process">
             </div>
           </form>
         </main>
@@ -169,14 +190,34 @@
         myTable.appendChild(tr);
       }
 
-      document.getElementById("process").addEventListener("click", function() {
+      document.getElementById("displayAdditional").addEventListener("click", function(event) {
+        event.preventDefault()
+        var x = document.getElementById("pramountdiscountvisible");
+        if (x.classList.contains("d-none")) {
+          x.classList.replace("d-none","d-inline-flex");
+        } else {
+          x.classList.replace("d-inline-flex","d-none");
+        }
+
+        var y = document.getElementById("interestdiscountvisible");
+        if (y.classList.contains("d-none")) {
+          y.classList.replace("d-none","d-inline-flex");
+        } else {
+          y.classList.replace("d-inline-flex","d-none");
+        }
+      });
+
+      document.getElementById("process").addEventListener("click", function(event) {
+        event.preventDefault()
         var procfee = readInput("procfee");
         var gst = readInput("gst") * 0.01;
         var pramount = readInput("pramount");
+        var pramountdiscount = readInput("pramountdiscount");
+        var interestdiscount = readInput("interestdiscount");
         var roi = readInput("roi") / 12 / 100;
         var tenure = readInput("tenure");
         var emitype = readInput("emitype");
-
+        pramount = pramount - pramountdiscount;
         //Interest Calculations
         var interest = [0];
         var tempPramount = pramount;
@@ -185,6 +226,7 @@
         var tempTotalInterest=0
         for (let i = 1; i <= tenure; i++) {
           tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
+          tempInterest = tempInterest - (interestdiscount / tenure);
           interest.push(tempInterest);
           tempInstall = (pramount / tenure) - tempInterest;
           tempInstall = tempPramount - (tempInstall + tempInterest);
