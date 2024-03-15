@@ -226,14 +226,16 @@
         var tempTotalInterest=0
         for (let i = 1; i <= tenure; i++) {
           tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
-          tempInterest = tempInterest - (interestdiscount / tenure);
           interest.push(tempInterest);
           tempInstall = (pramount / tenure) - tempInterest;
           tempInstall = tempPramount - (tempInstall + tempInterest);
           tempPramount = tempInstall;
           tempTotalInterest += tempInterest;
         }
-        
+        for (let i = 1; i <= tenure; i++) {
+          interest[i] = interest[i] - (interest[i]/tempTotalInterest)*interestdiscount
+        }
+        tempTotalInterest -= interestdiscount
         createTable(procfee, gst, (emitype == 0 ? pramount : pramount + tempTotalInterest), tenure, interest);
 
       });
