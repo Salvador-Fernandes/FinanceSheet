@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HRA</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://favicon.twenty.com/github.com" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+      html {
+        font-size: 14px;
+      }
+      .text-bold {
+        font-weight: bold !important;
+      }
+      .text-color {
+        color: red !important;
+      }
+      .text-amount {
+        text-align: right !important;
+      }
+      .input-group-text{
+        background-color: var(--bs-body-bg) !important; 
+        min-width: 75px !important;
+      }
+      .form-control:disabled, .disabled{
+        background-color: var(--bs-tertiary-bg) !important; 
+      }
+      .droparrow{ 
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important; 
+        padding: .375rem 1.50rem .375rem .75rem;
+        background-repeat: no-repeat;
+        background-position: right .75rem center;
+        background-size: 16px 12px;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container my-5">
+      <h1>
+        <span>HRA</span>
+        <div class="btn-group" style="float: right !important;">
+          <button type="button" class="btn btn-dark" onclick="printData()"><i class="bi bi-printer"></i></button>
+        </div>
+      </h1>
+      <div class="container">
+        <main class="col-12">
+          <form method="get">
+            <div class="row g-3">
+              <div class="col-12 d-inline-flex">
+                <label for="basic" class="form-label" style="min-width: 150px !important">Basic Salary</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="basic" placeholder="" value="0" required>
+                  <span class="input-group-text">/ Month</span>
+                </div>
+              </div> 
+              <div class="col-12 d-inline-flex">
+                <label for="rentmnth" class="form-label" style="min-width: 150px !important">Rent Paid</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="rentmnth" placeholder="" value="0" required>
+                  <span class="input-group-text">/ Month</span>
+                </div>
+              </div>
+
+              <div class="col-12 d-inline-flex">
+                <label for="rentyear" class="form-label" style="min-width: 150px !important">Rent Paid</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="rentyear" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Year</span>
+                </div>
+              </div>
+
+              <div class="col-12 d-inline-flex">
+                <label for="hra1" class="form-label" style="min-width: 150px !important">Rent - 10% Salary</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="hra1" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Month</span>
+                </div>
+              </div>
+              <div class="col-12 d-inline-flex">
+                <label for="hra2" class="form-label" style="min-width: 150px !important">50% Salary</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="hra2" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Month</span>
+                </div>
+              </div>
+              <div class="col-12 d-inline-flex">
+                <label for="hra3" class="form-label" style="min-width: 150px !important">40% Salary</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="hra3" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Month</span>
+                </div>
+              </div>
+
+              <div class="col-12 d-inline-flex">
+                <label for="hramnth" class="form-label" style="min-width: 150px !important">HRA</label>
+                <div class="input-group">
+                  <input type="number" class="form-control text-color" id="hramnth" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Month</span>
+                </div>
+              </div>
+              <div class="col-12 d-inline-flex">
+                <label for="hrayear" class="form-label" style="min-width: 150px !important">HRA</label>
+                <div class="input-group">
+                  <input type="number" class="form-control text-color" id="hrayear" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Year</span>
+                </div>
+              </div>
+
+              <input type="button" class="w-100 btn btn-lg btn-dark" type="button" id="process" value="Process">
+            </div>
+          </form>
+        </main>
+        <hr />
+        <main class="col-12 table-responsive">
+          <table class="table">
+            <tbody id="myTable"></tbody>
+          </table>
+        </main>
+      </div>
+    </div>
+    <script>
+      function printData(){
+        window.print();
+      }
+
+      function readInput(id){
+        var value = document.getElementById(id).value;
+        value = eval(value);
+        return parseFloat(value);
+      }
+
+      function setInput(id,value){
+        var node = document.getElementById(id);
+        node.value=value;
+      }
+
+      function roundoff(value) {
+        return parseFloat(value).toFixed(2);
+      }
+
+      document.getElementById("process").addEventListener("click", function(event) {
+        event.preventDefault()
+
+        var basic = readInput("basic");
+        var rentmnth = readInput("rentmnth");
+
+        setInput("rentyear",roundoff(rentmnth*12))
+
+        var hra1=roundoff(Math.abs(rentmnth-basic*0.1));
+        var hra2=roundoff(basic*0.5);
+        var hra3=roundoff(basic*0.4);
+
+        setInput("hra1",hra1)
+        setInput("hra2",hra2)
+        setInput("hra3",hra3)
+
+        setInput("hramnth",roundoff(Math.min(hra1,hra2,hra3)))
+        setInput("hrayear",roundoff(Math.min(hra1,hra2,hra3)*12))
+
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
