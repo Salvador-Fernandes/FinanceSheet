@@ -1,1 +1,2 @@
-Preview: https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/FinanceSheet/blob/main/FinanceSheet.html
+Preview: 
+EMI: https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/FinanceSheet/blob/main/EMI.html
