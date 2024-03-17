@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Finance Sheet</title>
+    <title>EMI</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://favicon.twenty.com/github.com" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
       html {
         font-size: 14px;
@@ -36,7 +37,13 @@
   </head>
   <body>
     <div class="container my-5">
-      <h1>Finance Sheet</h1>
+      <h1>
+        <span>EMI</span>
+        <div class="btn-group" style="float: right !important;">
+          <button type="button" class="btn btn-dark" onclick="downloadData()"><i class="bi bi-save"></i></button>
+          <button type="button" class="btn btn-dark" onclick="printData()"><i class="bi bi-printer"></i></button>
+        </div>
+      </h1>
       <div class="container">
         <main class="col-12">
           <form method="get">
@@ -107,6 +114,35 @@
       </div>
     </div>
     <script>
+      function printData(){
+        window.print();
+      }
+
+      function downloadData() {
+        let csv_data = [];
+        let rows = document.getElementsByTagName('tr');
+        for (let i = 0; i < rows.length; i++) {
+          let cols = rows[i].querySelectorAll('td,th');
+          let csvrow = [];
+          for (let j = 0; j < cols.length; j++) {
+            csvrow.push(cols[j].innerHTML);
+          }
+          csv_data.push(csvrow.join(","));
+        }
+        csv_data = csv_data.join('\n'); 
+        CSVFile = new Blob([csv_data], {
+          type: "text/csv"
+        });
+        let temp_link = document.createElement('a');
+        temp_link.download = "Data.csv";
+        let url = window.URL.createObjectURL(CSVFile);
+        temp_link.href = url;
+        temp_link.style.display = "none";
+        document.body.appendChild(temp_link);
+        temp_link.click();
+        document.body.removeChild(temp_link);
+      }
+
       function readInput(id){
         var value = document.getElementById(id).value;
         value = eval(value);
