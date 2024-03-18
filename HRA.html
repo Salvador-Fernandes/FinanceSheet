@@ -20,11 +20,16 @@
       .text-amount {
         text-align: right !important;
       }
-      .input-group-text{
+      .input-group .input-group-text{
         background-color: var(--bs-body-bg) !important; 
         min-width: 75px !important;
+        border-left: 0px !important;
       }
-      .form-control:disabled, .disabled{
+      .input-group .form-control{
+        border-right: 0px !important;
+
+      }
+      .form-control:disabled, .input-group .disabled{
         background-color: var(--bs-tertiary-bg) !important; 
       }
       .droparrow{ 
@@ -54,6 +59,10 @@
           <form method="get">
             <div class="row g-3">
               <div class="col-12 d-inline-flex">
+                <label for="term" class="form-label" style="min-width: 150px !important">Term</label>
+                <input type="number" class="form-control" id="term" placeholder="" value="12" required>
+              </div> 
+              <div class="col-12 d-inline-flex">
                 <label for="basic" class="form-label" style="min-width: 150px !important">Basic Salary</label>
                 <div class="input-group">
                   <input type="number" class="form-control" id="basic" placeholder="" value="0" required>
@@ -69,10 +78,10 @@
               </div>
 
               <div class="col-12 d-inline-flex">
-                <label for="rentyear" class="form-label" style="min-width: 150px !important">Rent Paid</label>
+                <label for="rentterm" class="form-label" style="min-width: 150px !important">Rent Paid</label>
                 <div class="input-group">
-                  <input type="number" class="form-control" id="rentyear" placeholder="" value="0" required disabled>
-                  <span class="input-group-text disabled">/ Year</span>
+                  <input type="number" class="form-control" id="rentterm" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Term</span>
                 </div>
               </div>
 
@@ -106,10 +115,10 @@
                 </div>
               </div>
               <div class="col-12 d-inline-flex">
-                <label for="hrayear" class="form-label" style="min-width: 150px !important">HRA</label>
+                <label for="hraterm" class="form-label" style="min-width: 150px !important">HRA</label>
                 <div class="input-group">
-                  <input type="number" class="form-control text-color" id="hrayear" placeholder="" value="0" required disabled>
-                  <span class="input-group-text disabled">/ Year</span>
+                  <input type="number" class="form-control text-color" id="hraterm" placeholder="" value="0" required disabled>
+                  <span class="input-group-text disabled">/ Term</span>
                 </div>
               </div>
 
@@ -148,10 +157,11 @@
       document.getElementById("process").addEventListener("click", function(event) {
         event.preventDefault()
 
+        var term = readInput("term");
         var basic = readInput("basic");
         var rentmnth = readInput("rentmnth");
 
-        setInput("rentyear",roundoff(rentmnth*12))
+        setInput("rentterm",roundoff(rentmnth*term))
 
         var hra1=roundoff(Math.abs(rentmnth-basic*0.1));
         var hra2=roundoff(basic*0.5);
@@ -162,7 +172,7 @@
         setInput("hra3",hra3)
 
         setInput("hramnth",roundoff(Math.min(hra1,hra2,hra3)))
-        setInput("hrayear",roundoff(Math.min(hra1,hra2,hra3)*12))
+        setInput("hraterm",roundoff(Math.min(hra1,hra2,hra3)*term))
 
       });
     </script>
