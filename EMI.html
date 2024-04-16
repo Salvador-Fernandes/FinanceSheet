@@ -88,7 +88,7 @@
                 <label for="tenure" class="form-label" style="min-width: 150px !important">Tenure</label>
                 <select class="form-select" id="tenure" required>
                   <option value="3">3 Months</option>
-                  <option value="6">6 Months</option>
+                  <option value="6" selected>6 Months</option>
                   <option value="8">8 Months</option>
                   <option value="9">9 Months</option>
                   <option value="10">10 Months</option>
@@ -180,7 +180,7 @@
         return node;
       }
 
-      function createTable(procfee, gst, tenure, amount, interest) {
+      function createTable(procfee, gst, tenure, payments) {
         var myTable = document.getElementById('myTable');
         myTable.innerHTML = '';
 
@@ -206,31 +206,46 @@
         tr.appendChild(createCell('th', 'Total'));
         myTable.appendChild(tr);
 
-        var tempTotalInstall = 0;
-        var tempTotalInterest = 0;
 
         for (let i = 1; i <= tenure; i++) {
-          var tempInterest = interest[i];
-          var tempInstall = amount[i];
-          tempTotalInstall += tempInstall;
-          tempTotalInterest += tempInterest;
+          var amount = payments['amount'][i];
+          var interest = payments['interest'][i];
 
           var tr = document.createElement('tr');
-          tr.appendChild(createCell('td', roundoff(tempInstall), 'text-amount'));
-          tr.appendChild(createCell('td', roundoff(tempInterest), 'text-amount'));
-          tr.appendChild(createCell('td', roundoff(tempInterest * gst), 'text-amount'));
-          tr.appendChild(createCell('td', roundoff(tempInstall + tempInterest), 'text-amount'));
-          tr.appendChild(createCell('td', roundoff(tempInstall + tempInterest * (1 + gst)), 'text-amount text-color'));
+          tr.appendChild(createCell('td', roundoff(amount), 'text-amount'));
+          tr.appendChild(createCell('td', roundoff(interest), 'text-amount'));
+          tr.appendChild(createCell('td', roundoff(interest * gst), 'text-amount'));
+          tr.appendChild(createCell('td', roundoff(amount + interest), 'text-amount'));
+          tr.appendChild(createCell('td', roundoff(amount + interest * (1 + gst)), 'text-amount text-color'));
           myTable.appendChild(tr);
         }
 
         var tr = document.createElement('tr');
-        tr.appendChild(createCell('td', roundoff(tempTotalInstall), 'text-amount text-bold'));
-        tr.appendChild(createCell('td', roundoff(tempTotalInterest), 'text-amount text-bold'));
-        tr.appendChild(createCell('td', roundoff(tempTotalInterest * gst), 'text-amount text-bold'));
-        tr.appendChild(createCell('td', roundoff(tempTotalInstall + tempTotalInterest), 'text-amount text-bold'));
-        tr.appendChild(createCell('td', roundoff(tempTotalInstall + tempTotalInterest * (1 + gst)), 'text-amount text-bold'));
+        var totalInstall = payments['totalamount'];
+        var totalInterest = payments['totalinterest'];
+        tr.appendChild(createCell('td', roundoff(totalInstall), 'text-amount text-bold'));
+        tr.appendChild(createCell('td', roundoff(totalInterest), 'text-amount text-bold'));
+        tr.appendChild(createCell('td', roundoff(totalInterest * gst), 'text-amount text-bold'));
+        tr.appendChild(createCell('td', roundoff(totalInstall + totalInterest), 'text-amount text-bold'));
+        tr.appendChild(createCell('td', roundoff(totalInstall + totalInterest * (1 + gst)), 'text-amount text-bold'));
         myTable.appendChild(tr);
+      }
+
+      function calculateEMI(tenure, roi, pramount, emi){
+        var amount = [0];
+        var interest = [0];
+        var totalInstall = 0;
+        var totalInterest = 0;
+        for (let i = 1; i <= tenure; i++) {
+          var tempInterest = pramount * roi;
+          var tempInstall = emi - tempInterest;
+          pramount -= tempInstall;
+          amount.push(tempInstall)
+          interest.push(tempInterest)
+          totalInstall += tempInstall;
+          totalInterest += tempInterest;
+        }
+        return {'amount':amount,'interest': interest, 'totalamount': totalInstall, 'totalinterest': totalInterest}
       }
 
       document.getElementById("process").addEventListener("click", function(event) {
@@ -241,37 +256,21 @@
         var pramount = readInput("pramount");
         var pramountdiscount = readInput("pramountdiscount");
         var interestdiscount = readInput("interestdiscount");
-        var roi = readInput("roi") / 12 / 100;
+        var roi = (readInput("roi") / 12) / 100;
         var tenure = readInput("tenure");
         var emitype = readInput("emitype");
         pramount = pramount - pramountdiscount - interestdiscount;
-
-        //Interest Calculations
-        var interest = [0];
-        var amount = [0];
-        var tempPramount = pramount;
-        var tempInstall = pramount;
-        var tempInterest = 0;
-        var tempTotalInterest=0
-        for (let i = 1; i <= tenure; i++) {
-          tempInterest = roi / (Math.pow(1 + roi, tenure) - 1) * (tempInstall * Math.pow(1 + roi, tenure) - tempInstall);
-          interest.push(tempInterest);
-          tempInstall = (pramount / tenure) - tempInterest;
-          amount.push(tempInstall)
-          tempInstall = tempPramount - (tempInstall + tempInterest);
-          tempPramount = tempInstall;
-          tempTotalInterest += tempInterest;
+        var emi = (pramount * roi) / (1 - Math.pow(1 + roi, -tenure));
+        var payments=calculateEMI(tenure, roi, pramount, emi);
+        if(emitype == 0){
+          var nocost=0
+          do{  
+            nocost=parseFloat(payments['totalinterest']).toFixed(5);
+            emi = ((pramount-nocost) * roi) / (1 - Math.pow(1 + roi, -tenure));
+            payments=calculateEMI(tenure, roi, pramount-nocost, emi);
+          }while(nocost!=parseFloat(payments['totalinterest']).toFixed(5))
         }
-        if(emitype == 1){
-          pramount = pramount + tempTotalInterest;
-        }
-        for (let i = 1; i <= tenure; i++) {
-          //interest[i] = interest[i] - (interest[i]/tempTotalInterest)*interestdiscount
-          amount[i] = ((pramount) / tenure) - interest[i];
-        }
-        tempTotalInterest -= interestdiscount
-        createTable(procfee, gst, tenure, amount, interest);
-
+        createTable(procfee, gst, tenure, payments);
       });
 
       document.getElementById("displayAdditional").addEventListener("click", function(event) {
