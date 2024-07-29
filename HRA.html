@@ -42,13 +42,16 @@
         border-radius: var(--bs-border-radius);
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
       }
+      @media print {
+        .no-print, .no-print * {display: none;}
+      }
     </style>
   </head>
   <body>
     <div class="container my-5">
         <h1>
             <span>HRA</span>
-            <div class="btn-group" style="float: right !important;">
+            <div class="btn-group no-print" style="float: right !important;">
               <button type="button" class="btn btn-dark" onclick="printData()"><i class="bi bi-printer"></i></button>
             </div>
           </h1>
