@@ -1,8 +1,8 @@
 # Utilties
 
-## Equated Monthly Instalment (EMI) Calculator
+## Equated Monthly Instalment (EMI) Calculator [Link](https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html)
 ```js
-[https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html](https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html)
+https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html
 ```
 
 ## Foreign Currency Convertor (FCC) Calculator
