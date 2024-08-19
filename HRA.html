@@ -253,10 +253,10 @@
         for (var i=0; i< from.length; i++){
             tempFrom = from[i];
             tempTo = to[i];
-            if(to <= from){
-                to = parseInt(to)+parseInt(12);
+            if(tempTo <= tempFrom){
+                tempTo = parseInt(tempTo)+parseInt(12);
             }
-            tenure = parseInt(to) - parseInt(tempFrom) + parseInt(1);
+            tenure = parseInt(tempTo) - parseInt(tempFrom) + parseInt(1);
 
             var tr = document.createElement('tr');
             tr.appendChild(createCell('th', 'Tenure'));
