@@ -241,32 +241,32 @@
         
         var tr = document.createElement("tr");
         tr.appendChild(createCell("th", "Amount"));
-        tr.appendChild(createCell("td", roundoff(amount)));
-        tr.appendChild(createCell("td", roundoff(amount)));
+        tr.appendChild(createCell("td", roundoff(amount), 'text-amount'));
+        tr.appendChild(createCell("td", roundoff(amount), 'text-amount'));
         myTable.appendChild(tr);
         
         var tr = document.createElement("tr");
         tr.appendChild(createCell("th", "Rate"));
-        tr.appendChild(createCell("td", roundoff(rate) + "%"));
+        tr.appendChild(createCell("td", roundoff(rate) + " %", 'text-color'));
         tr.appendChild(createCell("td", ""));
         myTable.appendChild(tr);
         
         var tr = document.createElement("tr");
         tr.appendChild(createCell("td", ""));
-        tr.appendChild(createCell("td", roundoff(amount*rate*0.01)));
-        tr.appendChild(createCell("td", roundoff((amount*rate*0.01)+amount)));
+        tr.appendChild(createCell("td", roundoff(amount*rate*0.01), 'text-amount'));
+        tr.appendChild(createCell("td", roundoff((amount*rate*0.01)+amount), 'text-amount'));
         myTable.appendChild(tr);
         
         var tr = document.createElement("tr");
         tr.appendChild(createCell("th", "GST"));
-        tr.appendChild(createCell("td", roundoff(gst) + "%"));
+        tr.appendChild(createCell("td", roundoff(gst) + " %", 'text-color'));
         tr.appendChild(createCell("td", ""));
         myTable.appendChild(tr);
         
         var tr = document.createElement("tr");
         tr.appendChild(createCell("td", ""));
-        tr.appendChild(createCell("td", roundoff(amount*rate*0.01*gst*0.01)));
-        tr.appendChild(createCell("td", roundoff((amount*rate*0.01*gst*0.01)+(amount*rate*0.01)+amount)));
+        tr.appendChild(createCell("td", roundoff(amount*rate*0.01*gst*0.01), 'text-amount'));
+        tr.appendChild(createCell("td", roundoff((amount*rate*0.01*gst*0.01)+(amount*rate*0.01)+amount), 'text-amount'));
         myTable.appendChild(tr);
       }
       
