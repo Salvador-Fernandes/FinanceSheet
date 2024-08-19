@@ -1,12 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HRA</title>
-    <link rel="icon" type="image/x-icon" href="https://favicon.twenty.com/github.com" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://favicon.twenty.com/github.com"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <style>
       html {
         font-size: 14px;
@@ -20,159 +32,194 @@
       .text-amount {
         text-align: right !important;
       }
-      .input-group .input-group-text{
-        background-color: var(--bs-body-bg) !important; 
+      .input-group .input-group-text {
+        background-color: var(--bs-body-bg) !important;
         min-width: 75px !important;
         border-left: 0px !important;
       }
-      .input-group .form-control{
+      .input-group .form-control {
         border-right: 0px !important;
-
       }
-      .form-control:disabled, .input-group .disabled{
-        background-color: var(--bs-tertiary-bg) !important; 
+      .form-control:disabled,
+      .input-group .disabled {
+        background-color: var(--bs-tertiary-bg) !important;
       }
-      .droparrow{ 
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important; 
-        padding: .375rem 1.50rem .375rem .75rem;
+      .droparrow {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+        padding: 0.375rem 1.5rem 0.375rem 0.75rem;
         background-repeat: no-repeat;
-        background-position: right .75rem center;
+        background-position: right 0.75rem center;
         background-size: 16px 12px;
         border: var(--bs-border-width) solid var(--bs-border-color);
         border-radius: var(--bs-border-radius);
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
       }
 
-      .fab-container{
-            position:fixed;
-            bottom:50px;
-            right:50px;
-            cursor:pointer;
-        }
-        .iconbutton{
-            width:20px;
-            height:20px;
-            border-radius: 100%;
-            background: #000;
-        }
-        .button{
-            width:25px;
-            height:25px;
-            background:#fff;
-        }
-        .iconbutton i{
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            height: 100%;
-        }
-        
+      .fab-container {
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+        cursor: pointer;
+      }
+      .iconbutton {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background: #000;
+      }
+      .button {
+        width: 25px;
+        height: 25px;
+        background: #fff;
+      }
+      .iconbutton i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
       @media print {
-        .no-print, .no-print * {display: none;}
+        .no-print,
+        .no-print * {
+          display: none;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container my-5">
-        <h1>
-            <span>HRA</span>
-            <div class="btn-group no-print" style="float: right !important;">
-                <button type="button" class="btn btn-dark" onclick="downloadData()"><i class="bi bi-save"></i></button>
-                <button type="button" class="btn btn-dark" onclick="printData()"><i class="bi bi-printer"></i></button>
-            </div>
-          </h1>
+      <h1>
+        <span>HRA</span>
+        <div class="btn-group no-print" style="float: right !important">
+          <button type="button" class="btn btn-dark" onclick="downloadData()">
+            <i class="bi bi-save"></i>
+          </button>
+          <button type="button" class="btn btn-dark" onclick="printData()">
+            <i class="bi bi-printer"></i>
+          </button>
+        </div>
+      </h1>
     </div>
     <div class="container my-5">
       <div class="container">
         <main class="col-12">
           <form method="get">
             <div class="row g-3 comp" name="0">
-                <div class="col-12 d-inline-flex">
-                    <label class="form-label" style="min-width: 150px !important">Term</label>
-                    <div class="input-group">
-                        <select class="form-select" name="from" required>
-                            <option value="1" selected>January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4" selected>April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        <select class="form-select" name="to" required>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3" selected>March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                    </div>
-                </div> 
-                <div class="col-12 d-inline-flex">
-                    <label class="form-label" style="min-width: 150px !important">Basic Salary</label>
-                    <div class="input-group">
-                    <input type="number" class="form-control" name="basic" placeholder="" value="0" required>
-                    <span class="input-group-text">/ Month</span>
-                    </div>
-                </div> 
-                <div class="col-12 d-inline-flex">
-                    <label class="form-label" style="min-width: 150px !important">Rent Paid</label>
-                    <div class="input-group">
-                    <input type="number" class="form-control" name="rent" placeholder="" value="0" required>
-                    <span class="input-group-text">/ Month</span>
-                    </div>
+              <div class="col-12 d-inline-flex">
+                <label class="form-label" style="min-width: 150px !important"
+                  >Term</label
+                >
+                <div class="input-group">
+                  <select class="form-select" name="from" required>
+                    <option value="1" selected>January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4" selected>April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                  <select class="form-select" name="to" required>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3" selected>March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
                 </div>
-                <div class="col-12 d-inline-flex"></div>
+              </div>
+              <div class="col-12 d-inline-flex">
+                <label class="form-label" style="min-width: 150px !important"
+                  >Basic Salary</label
+                >
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="basic"
+                    placeholder=""
+                    value="0"
+                    required
+                  />
+                  <span class="input-group-text">/ Month</span>
+                </div>
+              </div>
+              <div class="col-12 d-inline-flex">
+                <label class="form-label" style="min-width: 150px !important"
+                  >Rent Paid</label
+                >
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="rent"
+                    placeholder=""
+                    value="0"
+                    required
+                  />
+                  <span class="input-group-text">/ Month</span>
+                </div>
+              </div>
+              <div class="col-12 d-inline-flex"></div>
             </div>
           </form>
           <div class="row g-3">
-            <input type="button" class="w-100 btn btn-lg btn-dark" type="button" id="process" value="Process">
-        </div>
+            <input
+              type="button"
+              class="w-100 btn btn-lg btn-dark"
+              type="button"
+              id="process"
+              value="Process"
+            />
+          </div>
         </main>
         <hr />
         <main class="col-12 table-responsive">
-            <table class="table">
-              <tbody id="myTable"></tbody>
-            </table>
-          </main>
+          <table class="table">
+            <tbody id="myTable"></tbody>
+          </table>
+        </main>
         <div class="fab-container no-print">
-            <button class="button iconbutton" onclick="addRow()"><i class="bi bi-plus"></i></button>
+          <button class="button iconbutton" onclick="addRow()">
+            <i class="bi bi-plus"></i>
+          </button>
         </div>
       </div>
     </div>
     <script>
-      function printData(){
+      function printData() {
         window.print();
       }
 
       function downloadData() {
         let csv_data = [];
-        let rows = document.getElementsByTagName('tr');
+        let rows = document.getElementsByTagName("tr");
         for (let i = 0; i < rows.length; i++) {
-          let cols = rows[i].querySelectorAll('td,th');
+          let cols = rows[i].querySelectorAll("td,th");
           let csvrow = [];
           for (let j = 0; j < cols.length; j++) {
             csvrow.push(cols[j].innerHTML);
           }
           csv_data.push(csvrow.join(","));
         }
-        csv_data = csv_data.join('\n'); 
+        csv_data = csv_data.join("\n");
         CSVFile = new Blob([csv_data], {
-          type: "text/csv"
+          type: "text/csv",
         });
-        let temp_link = document.createElement('a');
+        let temp_link = document.createElement("a");
         temp_link.download = "Data.csv";
         let url = window.URL.createObjectURL(CSVFile);
         temp_link.href = url;
@@ -182,33 +229,32 @@
         document.body.removeChild(temp_link);
       }
 
-      function addRow(){
-            var noOfComp = document.getElementsByClassName("comp").length;
-            var div = document.getElementsByName("0")[0];
-            const cloneDiv = div.cloneNode(true);
-            var btn = document.createElement('button');
-            btn.style = "float:right;text-align:right";
-            btn.className = "btn no-print";
-            btn.type = "button";
-            btn.setAttribute("onclick","return removeRow(event);");
-            var i = document.createElement('i');
-            i.className = "bi bi-x";
-            btn.append(i);
-            cloneDiv.insertBefore(btn, cloneDiv.firstChild);
-            //cloneDiv.insertBefore(document.createElement('hr'), cloneDiv.firstChild);
-            cloneDiv.name = noOfComp;
-            div.parentElement.appendChild(cloneDiv);
-        }
+      function addRow() {
+        var noOfComp = document.getElementsByClassName("comp").length;
+        var div = document.getElementsByName("0")[0];
+        const cloneDiv = div.cloneNode(true);
+        var btn = document.createElement("button");
+        btn.style = "float:right;text-align:right";
+        btn.className = "btn no-print";
+        btn.type = "button";
+        btn.setAttribute("onclick", "return removeRow(event);");
+        var i = document.createElement("i");
+        i.className = "bi bi-x";
+        btn.append(i);
+        cloneDiv.insertBefore(btn, cloneDiv.firstChild);
+        cloneDiv.name = noOfComp;
+        div.parentElement.appendChild(cloneDiv);
+      }
 
-        function removeRow(event){
-            event.currentTarget.parentElement.remove();
-        }
+      function removeRow(event) {
+        event.currentTarget.parentElement.remove();
+      }
 
-      function readInputByName(name){
+      function readInputByName(name) {
         var values = [];
         let rows = document.getElementsByName(name);
-        for(var i=0; i<rows.length; i++){
-            values.push(parseFloat(eval(rows[i].value)));
+        for (var i = 0; i < rows.length; i++) {
+          values.push(parseFloat(eval(rows[i].value)));
         }
         return values;
       }
@@ -230,130 +276,141 @@
       }
 
       function createRowBlank(cols) {
-        var node = document.createElement('td');
+        var node = document.createElement("td");
         node.colSpan = cols;
         return node;
       }
 
       function createTable(from, to, basic, rent) {
-        var myTable = document.getElementById('myTable');
-        myTable.innerHTML = '';
+        var showCalc = true;
+        var myTable = document.getElementById("myTable");
+        myTable.innerHTML = "";
 
         //Processing Fee
-        var tr = document.createElement('tr');
-        tr.appendChild(createCell('td', ''));
-        tr.appendChild(createCell('th', '/Month', 'text-amount'));
-        tr.appendChild(createCell('th', '/Term', 'text-amount'));
+        var tr = document.createElement("tr");
+        tr.appendChild(createCell("td", ""));
+        tr.appendChild(createCell("th", "/Month", "text-amount"));
+        tr.appendChild(createCell("th", "/Term", "text-amount"));
         myTable.appendChild(tr);
 
         var totalTenure = 0;
         var totalBasic = 0;
         var totalRent = 0;
         var totalHRA = 0;
-        for (var i=0; i< from.length; i++){
-            tempFrom = from[i];
-            tempTo = to[i];
-            if(tempTo <= tempFrom){
-                tempTo = parseInt(tempTo)+parseInt(12);
-            }
-            tenure = parseInt(tempTo) - parseInt(tempFrom) + parseInt(1);
+        for (var i = 0; i < from.length; i++) {
+          tempFrom = from[i];
+          tempTo = to[i];
+          if (tempTo <= tempFrom) {
+            tempTo = parseInt(tempTo) + parseInt(12);
+          }
+          tenure = parseInt(tempTo) - parseInt(tempFrom) + parseInt(1);
 
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', 'Tenure'));
-            tr.appendChild(createCell('td',  ''));
-            tr.appendChild(createCell('td', tenure, 'text-amount text-color'));
+          var tr = document.createElement("tr");
+          tr.appendChild(createCell("th", "Tenure"));
+          tr.appendChild(createCell("td", ""));
+          tr.appendChild(createCell("td", tenure, "text-amount text-color"));
+          myTable.appendChild(tr);
+
+          var tr = document.createElement("tr");
+          tr.appendChild(createCell("th", "Basic"));
+          tr.appendChild(createCell("td", roundoff(basic[i]), "text-amount"));
+          tr.appendChild(createCell("td", roundoff(basic[i] * tenure), "text-amount"));
+          myTable.appendChild(tr);
+
+          var tr = document.createElement("tr");
+          tr.appendChild(createCell("th", "Rent"));
+          tr.appendChild(createCell("td", roundoff(rent[i]), "text-amount"));
+          tr.appendChild(createCell("td", roundoff(rent[i] * tenure), "text-amount"));
+          myTable.appendChild(tr);
+
+          var hra1 = Math.abs(rent[i] - basic[i] * 0.1);
+          if(showCalc){
+            var tr = document.createElement("tr");
+            tr.appendChild(createCell("td", "R-10%B", "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra1), "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra1 * tenure), "text-amount"));
             myTable.appendChild(tr);
+          }
+          var hra2 = Math.abs(basic[i] * 0.5);
 
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', 'Basic'));
-            tr.appendChild(createCell('td', roundoff(basic[i]), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(basic[i]*tenure), 'text-amount'));
+          if(showCalc){
+            var tr = document.createElement("tr");
+            tr.appendChild(createCell("td", "50%B", "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra2), "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra2 * tenure), "text-amount"));
             myTable.appendChild(tr);
+          }
 
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', 'Rent'));
-            tr.appendChild(createCell('td', roundoff(rent[i]), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(rent[i]*tenure), 'text-amount'));
+          var hra3 = Math.abs(basic[i] * 0.4);
+
+          if(showCalc){
+            var tr = document.createElement("tr");
+            tr.appendChild(createCell("td", "40%B", "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra3), "text-amount"));
+            tr.appendChild(createCell("td", roundoff(hra3 * tenure), "text-amount"));
             myTable.appendChild(tr);
+          }
 
-            var hra1 = Math.abs(rent[i]-basic[i]*0.1);
+          var hra = roundoff(Math.min(hra1, hra2, hra3));
 
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', ''));
-            tr.appendChild(createCell('td', roundoff(hra1), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(hra1*tenure), 'text-amount'));
-            myTable.appendChild(tr);
+          var tr = document.createElement("tr");
+          tr.appendChild(createCell("th", "HRA"));
+          tr.appendChild(createCell("td", roundoff(hra), "text-amount"));
+          tr.appendChild(createCell("td", roundoff(hra * tenure), "text-amount"));
+          myTable.appendChild(tr);
 
-            var hra2 = Math.abs(basic[i]*0.5);
+          var tr = document.createElement("tr");
+          tr.appendChild(createRowBlank(6));
+          myTable.appendChild(tr);
 
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', ''));
-            tr.appendChild(createCell('td', roundoff(hra2), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(hra2*tenure), 'text-amount'));
-            myTable.appendChild(tr);
-
-            var hra3 = Math.abs(basic[i]*0.4);
-
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', ''));
-            tr.appendChild(createCell('td', roundoff(hra3), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(hra3*tenure), 'text-amount'));
-            myTable.appendChild(tr);
-
-            var hra = roundoff(Math.min(hra1,hra2,hra3));
-
-            var tr = document.createElement('tr');
-            tr.appendChild(createCell('th', 'HRA'));
-            tr.appendChild(createCell('td', roundoff(hra), 'text-amount'));
-            tr.appendChild(createCell('td',  roundoff(hra*tenure), 'text-amount'));
-            myTable.appendChild(tr);
-
-            var tr = document.createElement('tr');
-            tr.appendChild(createRowBlank(6))
-            myTable.appendChild(tr);
-
-            totalTenure+=tenure;
-            totalBasic+=basic[i]*tenure;
-            totalRent+=rent[i]*tenure;
-            totalHRA+=hra*tenure;
+          totalTenure += tenure;
+          totalBasic += basic[i] * tenure;
+          totalRent += rent[i] * tenure;
+          totalHRA += hra * tenure;
         }
 
-        var tr = document.createElement('tr');
-        tr.appendChild(createCell('td',  ''));
-        tr.appendChild(createCell('th', 'Tenure', 'text-amount'));
-        tr.appendChild(createCell('td', totalTenure, 'text-color text-amount text-bold'));
+        var tr = document.createElement("tr");
+        tr.appendChild(createCell("td", ""));
+        tr.appendChild(createCell("th", "Tenure", "text-amount"));
+        tr.appendChild(createCell("td", totalTenure, "text-color text-amount text-bold"));
         myTable.appendChild(tr);
 
-        var tr = document.createElement('tr');
-        tr.appendChild(createCell('td', '', ''));
-        tr.appendChild(createCell('th', 'Basic', 'text-amount'));
-        tr.appendChild(createCell('td',  roundoff(totalBasic), 'text-amount text-bold'));
+        var tr = document.createElement("tr");
+        tr.appendChild(createCell("td", "", ""));
+        tr.appendChild(createCell("th", "Basic", "text-amount"));
+        tr.appendChild(createCell("td", roundoff(totalBasic), "text-amount text-bold"));
         myTable.appendChild(tr);
 
-        var tr = document.createElement('tr');
-        tr.appendChild(createCell('td', '', ''));
-        tr.appendChild(createCell('th', 'Rent', 'text-amount'));
-        tr.appendChild(createCell('td',  roundoff(totalRent), 'text-amount text-bold'));
+        var tr = document.createElement("tr");
+        tr.appendChild(createCell("td", "", ""));
+        tr.appendChild(createCell("th", "Rent", "text-amount"));
+        tr.appendChild(createCell("td", roundoff(totalRent), "text-amount text-bold"));
         myTable.appendChild(tr);
 
-        var tr = document.createElement('tr');
-        tr.appendChild(createCell('td', '', ''));
-        tr.appendChild(createCell('th', 'HRA', 'text-amount'));
-        tr.appendChild(createCell('td',  roundoff(totalHRA), 'text-amount text-bold'));
+        var tr = document.createElement("tr");
+        tr.appendChild(createCell("td", "", ""));
+        tr.appendChild(createCell("th", "HRA", "text-amount"));
+        tr.appendChild(createCell("td", roundoff(totalHRA), "text-amount text-bold"));
         myTable.appendChild(tr);
       }
 
-      document.getElementById("process").addEventListener("click", function(event) {
-        event.preventDefault()
+      document
+        .getElementById("process")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
 
-        var from = readInputByName("from");
-        var to = readInputByName("to");
-        var basic = readInputByName("basic");
-        var rent = readInputByName("rent");
-    
-        createTable(from, to, basic, rent)
-      });
+          var from = readInputByName("from");
+          var to = readInputByName("to");
+          var basic = readInputByName("basic");
+          var rent = readInputByName("rent");
+
+          createTable(from, to, basic, rent);
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
