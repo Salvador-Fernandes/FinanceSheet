@@ -69,7 +69,7 @@
               <div class="col-12 d-inline-flex">
                 <label for="amount" class="form-label" style="min-width: 150px !important">Amount</label>
                 <div class="input-group">
-                  <input type="number" class="form-control" id="amount" placeholder="" value="0" required>
+                  <input type="number" class="form-control" id="amount" placeholder="" value="1" required>
                 </div>
               </div>
               <div class="col-12 d-inline-flex">
@@ -135,7 +135,7 @@
       const loadSupporedCurrencies = async () => {
           var curr_list = []
           if (true){
-              curr_list = ["INR"]
+              curr_list = ["INR","USD","EUR"]
               //curr_list = ["INR","USD","EUR","AED","AFN","ALL","AMD","ANG","AOA","ARS","AUD","AWG","AZN","BAM","BBD","BDT","BGN","BHD","BIF","BMD","BND","BOB","BRL","BSD","BTC","BTN","BWP","BYN","BYR","BZD","CAD","CDF","CHF","CLF","CLP","CNY","CNH","COP","CRC","CUC","CUP","CVE","CZK","DJF","DKK","DOP","DZD","EGP","ERN","ETB","EUR","FJD","FKP","GBP","GEL","GGP","GHS","GIP","GMD","GNF","GTQ","GYD","HKD","HNL","HRK","HTG","HUF","IDR","ILS","IMP","IQD","IRR","ISK","JEP","JMD","JOD","JPY","KES","KGS","KHR","KMF","KPW","KRW","KWD","KYD","KZT","LAK","LBP","LKR","LRD","LSL","LTL","LVL","LYD","MAD","MDL","MGA","MKD","MMK","MNT","MOP","MRU","MUR","MVR","MWK","MXN","MYR","MZN","NAD","NGN","NIO","NOK","NPR","NZD","OMR","PAB","PEN","PGK","PHP","PKR","PLN","PYG","QAR","RON","RSD","RUB","RWF","SAR","SBD","SCR","SDG","SEK","SGD","SHP","SLE","SLL","SOS","SRD","STD","SVC","SYP","SZL","THB","TJS","TMT","TND","TOP","TRY","TTD","TWD","TZS","UAH","UGX","UYU","UZS","VEF","VES","VND","VUV","WST","XAF","XAG","XAU","XCD","XDR","XOF","XPF","YER","ZAR","ZMK","ZMW","ZWL"];
           }else{
               var req_url = "https://api.exchangeratesapi.io/latest"
@@ -163,16 +163,16 @@
       loadSupporedCurrencies();
       
       const getExRate = async (currency, baseCurrency, amount, date) => {
-        let req_url = "https://api.exchangeratesapi.io/v1/"+date+"/convert"
+        let req_url = "https://api.exchangeratesapi.io/v1/"+date+""
                             + "?access_key="+API_KEY 
-                            + "&from="+currency
-                            + "&to="+baseCurrency
-                            + "&amount="+amount
+                            + "&symbols="+baseCurrency+","+currency
                             //+ "&date="+date
         console.log(req_url)
         let res = await fetch(req_url);
         let data = await res.json();
-        return data.rates[to];
+        rate = data.rates[baseCurrency] * (1 / data.rates[currency])
+        console.log(rate)
+        return rate;
       };
       
       function readInput(id){
@@ -259,7 +259,7 @@
         myTable.appendChild(tr);
       }
       
-      document.getElementById("process").addEventListener("click", function(event) {
+      document.getElementById("process").addEventListener("click", async function(event) {
         event.preventDefault();
         
         var date = readInputText("date");
@@ -268,7 +268,9 @@
         var rate = readInput("rate");
         var gst = readInput("gst");
         if(currency != "INR"){
-            amount = getExRate(currency, baseCurrency, amount, date)
+            temp = await getExRate(currency, baseCurrency, amount, date);
+            amount = amount * temp;
+            
         }
         createTable(date, baseCurrency, amount, rate, gst);
       });
