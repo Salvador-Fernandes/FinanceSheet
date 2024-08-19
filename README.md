@@ -1,21 +1,21 @@
 # Utilties
 
 ## Equated Monthly Instalment (EMI) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html)
+[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/EMI.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/EMI.html
+https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/EMI.html
 ```
 
 ## Foreign Currency Convertor (FCC) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/FCC.html)
+[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/FCC.html
+https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html
 ```
 
 ## House Rent Allowance (HRA) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/HRA.html)
+[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/HRA.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/Salvador-Fernandes/Utilities/blob/main/HRA.html
+https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/HRA.html
 ```
 
 
