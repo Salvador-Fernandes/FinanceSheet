@@ -6,7 +6,7 @@
 https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/EMI.html
 ```
 
-## Foreign Currency Convertor (FCC) Calculator 
+## Foreign Currency Conversion (FCC) Calculator 
 [Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html)
 ```js
 https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html
