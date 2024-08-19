@@ -166,7 +166,6 @@
         let req_url = "https://api.exchangeratesapi.io/v1/"+date+""
                             + "?access_key="+API_KEY 
                             + "&symbols="+baseCurrency+","+currency
-                            //+ "&date="+date
         let res = await fetch(req_url);
         let data = await res.json();
         rate = data.rates[baseCurrency] * (1 / data.rates[currency])
