@@ -321,11 +321,11 @@
 
         //Monthly Installment Calculations
         var tr = document.createElement("tr");
-        tr.appendChild(createCell("th", "Principal"));
-        tr.appendChild(createCell("th", "Interest"));
-        tr.appendChild(createCell("th", "Tax"));
-        tr.appendChild(createCell("th", "Total w/o Tax"));
-        tr.appendChild(createCell("th", "Total"));
+        tr.appendChild(createCell("th", "Principal", "text-amount"));
+        tr.appendChild(createCell("th", "Interest", "text-amount"));
+        tr.appendChild(createCell("th", "Tax", "text-amount"));
+        tr.appendChild(createCell("th", "Total w/o Tax", "text-amount"));
+        tr.appendChild(createCell("th", "Total", "text-amount"));
         myTable.appendChild(tr);
 
         for (let i = 1; i <= tenure; i++) {
@@ -423,14 +423,24 @@
           var emi = (pramount * roi) / (1 - Math.pow(1 + roi, -tenure));
           var payments = calculateEMI(tenure, roi, pramount, emi);
           if (emitype == 0) {
+            var rounding = 5;
+            var noCostTemp = 0;
             var nocost = 0;
             do {
-              nocost = parseFloat(payments["totalinterest"]).toFixed(5);
+              noCostTemp = nocost;
+              nocost = parseFloat(payments["totalinterest"]).toFixed(rounding);
               emi =
                 ((pramount - nocost) * roi) / (1 - Math.pow(1 + roi, -tenure));
               payments = calculateEMI(tenure, roi, pramount - nocost, emi);
+              console.log(
+                nocost,
+                parseFloat(payments["totalinterest"]).toFixed(rounding)
+              );
             } while (
-              nocost != parseFloat(payments["totalinterest"]).toFixed(5)
+              nocost !=
+                parseFloat(payments["totalinterest"]).toFixed(rounding) &&
+              noCostTemp !=
+                parseFloat(payments["totalinterest"]).toFixed(rounding)
             );
           }
           createTable(procfee, gst, tenure, payments);
