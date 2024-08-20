@@ -423,24 +423,17 @@
           var emi = (pramount * roi) / (1 - Math.pow(1 + roi, -tenure));
           var payments = calculateEMI(tenure, roi, pramount, emi);
           if (emitype == 0) {
-            var rounding = 5;
             var noCostTemp = 0;
             var nocost = 0;
             do {
               noCostTemp = nocost;
-              nocost = parseFloat(payments["totalinterest"]).toFixed(rounding);
+              nocost = parseFloat(payments["totalinterest"]);
               emi =
                 ((pramount - nocost) * roi) / (1 - Math.pow(1 + roi, -tenure));
               payments = calculateEMI(tenure, roi, pramount - nocost, emi);
-              console.log(
-                nocost,
-                parseFloat(payments["totalinterest"]).toFixed(rounding)
-              );
             } while (
-              nocost !=
-                parseFloat(payments["totalinterest"]).toFixed(rounding) &&
-              noCostTemp !=
-                parseFloat(payments["totalinterest"]).toFixed(rounding)
+              nocost != parseFloat(payments["totalinterest"]) &&
+              noCostTemp != parseFloat(payments["totalinterest"])
             );
           }
           createTable(procfee, gst, tenure, payments);
