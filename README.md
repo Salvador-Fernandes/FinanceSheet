@@ -1,21 +1,21 @@
 # Utilties
 
 ## Equated Monthly Instalment (EMI) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/EMI.html)
+[Usage Link](https://salvador-fernandes.github.io/Utilities/EMI.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/EMI.html
+https://salvador-fernandes.github.io/Utilities/EMI.html
 ```
 
 ## Foreign Currency Conversion (FCC) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html)
+[Usage Link](https://salvador-fernandes.github.io/Utilities/FCC.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/FCC.html
+https://salvador-fernandes.github.io/Utilities/FCC.html
 ```
 
 ## House Rent Allowance (HRA) Calculator 
-[Usage Link](https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/HRA.html)
+[Usage Link](https://salvador-fernandes.github.io/Utilities/HRA.html)
 ```js
-https://htmlpreview.github.io/?https://github.com/salvador-fernandes/Utilities/blob/main/HRA.html
+https://salvador-fernandes.github.io/Utilities/HRA.html
 ```
 
 
